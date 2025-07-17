@@ -1,177 +1,105 @@
 <!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cool Shot Designs/Tech</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cool Shot Designs/Tech - Home</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    :root {
-      --text: #111;
-      --bg: #fff;
-    }
-    [data-theme="dark"] {
-      --text: #eee;
-      --bg: #111;
-    }
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(270deg, #ffecd2, #fcb69f, #ff9a9e, #fad0c4);
-      background-size: 800% 800%;
-      animation: gradientBG 20s ease infinite;
-      color: var(--text);
-      transition: background 0.5s, color 0.5s;
-    }
-    @keyframes gradientBG {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
-    }
-    header {
-      background: rgba(0, 0, 0, 0.7);
-      color: white;
-      padding: 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .menu-button {
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: -250px;
-      width: 250px;
-      height: 100%;
-      background: #222;
-      color: white;
-      padding: 1rem;
-      transition: left 0.3s ease;
-      z-index: 999;
-    }
-    .sidebar a {
-      display: block;
-      margin: 1rem 0;
-      color: white;
-      text-decoration: none;
-    }
-    .sidebar.open {
-      left: 0;
-    }
-    main {
-      padding: 2rem;
-      text-align: center;
-    }
-    button.theme-toggle {
-      background: none;
-      border: 1px solid white;
-      color: white;
-      padding: 0.5rem 1rem;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-    #searchSection {
-      margin-top: 2rem;
-    }
-    #searchInput {
-      padding: 0.5rem;
-      width: 70%;
-      max-width: 400px;
-    }
-    #searchBtn {
-      padding: 0.5rem 1rem;
-      margin-left: 0.5rem;
-      cursor: pointer;
-    }
-    #results {
-      text-align: left;
-      max-width: 600px;
-      margin: 2rem auto;
-      background: rgba(255, 255, 255, 0.8);
-      padding: 1rem;
-      border-radius: 10px;
-    }
+      background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4);
+      background-size: 500% 500%;
+      animation: gradientShift 20s ease infinite;
+      color: #222;
+    }@keyframes gradientShift {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+
+header {
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.menu-toggle {
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.main-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  text-align: center;
+  padding: 2rem;
+}
+
+.main-content h1 {
+  font-size: 2rem;
+}
+
+.floating-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #0077ff;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+}
+
+.floating-btn:hover {
+  background: #005fe0;
+}
+
   </style>
 </head>
 <body>
   <header>
-    <div class="menu-button" onclick="toggleSidebar()">
-      <i class="fas fa-bars"></i>
-    </div>
     <h1>Cool Shot Designs/Tech</h1>
-    <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
-  </header>  <div id="sidebar" class="sidebar" onclick="event.stopPropagation()">
-    <a href="index.html">Home</a>
-    <a href="contact.html">Contact</a>
-    <a href="dictionary.html">Dictionary</a>
-    <a href="bible/index.html">Bible</a>
-    <a href="music.html">Music Player</a>
-    <a href="games.html">Games</a>
-    <a href="apps.html">App Downloads</a>
-    <a href="#searchSection">Search</a>
-  </div>  <main onclick="closeSidebar()">
-    <h2>Welcome to Cool Shot Designs/Tech</h2>
-    <p>Innovative. Creative. Connected.</p><div id="searchSection">
-  <input type="text" id="searchInput" placeholder="Search the web or dictionary..." />
-  <button id="searchBtn" onclick="performSearch()">Search</button>
-</div>
-<div id="results"></div>
+    <button class="menu-toggle" onclick="toggleSidebar()">
+      <i class="fas fa-bars"></i>
+    </button>
+  </header>  <div id="sidebar" class="sidebar" style="display:none; position: fixed; top: 0; left: 0; background: #111; height: 100%; width: 250px; padding: 1rem; z-index: 999;">
+    <button onclick="toggleSidebar()" style="background: none; border: none; color: white; font-size: 1.5rem; float: right;">&times;</button>
+    <ul style="list-style: none; padding: 0; margin-top: 2rem;">
+      <li><a href="index.html" style="color:white;"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="search.html" style="color:white;"><i class="fas fa-search"></i> Search</a></li>
+      <li><a href="bible.html" style="color:white;"><i class="fas fa-book"></i> Bible</a></li>
+      <li><a href="music.html" style="color:white;"><i class="fas fa-music"></i> Music</a></li>
+      <li><a href="games.html" style="color:white;"><i class="fas fa-gamepad"></i> Games</a></li>
+      <li><a href="dictionary.html" style="color:white;"><i class="fas fa-language"></i> Dictionary</a></li>
+      <li><a href="contact.html" style="color:white;"><i class="fas fa-envelope"></i> Contact</a></li>
+    </ul>
+  </div>  <div class="main-content">
+    <div>
+      <h1>Welcome to <span style="color: #0077ff;">Cool Shot Designs/Tech</span></h1>
+      <p>Your personal digital suite: Bible, Music, Games, Dictionary & More</p>
+    </div>
+  </div><a href="music.html" class="floating-btn"><i class="fas fa-play"></i> Music</a>
 
-  </main>  <script>
+  <script>
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
-      sidebar.classList.toggle('open');
-    }
-    function closeSidebar() {
-      const sidebar = document.getElementById('sidebar');
-      sidebar.classList.remove('open');
-    }
-    function toggleTheme() {
-      const theme = document.documentElement.getAttribute("data-theme");
-      document.documentElement.setAttribute("data-theme", theme === "dark" ? "light" : "dark");
-    }
-    async function performSearch() {
-      const query = document.getElementById("searchInput").value;
-      if (!query) return;
-
-      const googleUrl = `https://api.giftedtech.co.ke/api/search/google?apikey=gifted&query=${encodeURIComponent(query)}`;
-      const dictionaryUrl = `https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(query)}`;
-
-      let output = "";
-      try {
-        const [webRes, dictRes] = await Promise.all([
-          fetch(googleUrl).then(res => res.json()),
-          fetch(dictionaryUrl).then(res => res.json())
-        ]);
-
-        output += "<h3>Dictionary Definition:</h3>";
-        if (Array.isArray(dictRes)) {
-          dictRes.forEach(entry => {
-            entry.meanings.forEach(meaning => {
-              output += `<p><strong>${meaning.partOfSpeech}</strong>: ${meaning.definitions[0].definition}</p>`;
-            });
-          });
-        } else {
-          output += "<p>No dictionary result found.</p>";
-        }
-
-        output += "<h3>Web Search Results:</h3><ul>";
-        if (webRes.results && webRes.results.length > 0) {
-          webRes.results.forEach(item => {
-            output += `<li><a href="${item.link}" target="_blank">${item.title}</a><br>${item.description}</li>`;
-          });
-        } else {
-          output += "<li>No search results found.</li>";
-        }
-        output += "</ul>";
-      } catch (err) {
-        output = "<p>Error retrieving data.</p>";
-      }
-
-      document.getElementById("results").innerHTML = output;
+      sidebar.style.display = sidebar.style.display === 'none' ? 'block' : 'none';
     }
   </script></body>
-</html>
+                                                                                           </html>
