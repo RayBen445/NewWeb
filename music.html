@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Music | Cool Shot Designs/Tech</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      background: linear-gradient(270deg, #fdfbfb, #ebedee);
+      background-size: 800% 800%;
+      animation: gradient 30s ease infinite;
+    }
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    header {
+      background: #222;
+      color: #fff;
+      padding: 1rem;
+    }
+    header a {
+      color: #0f0;
+      text-decoration: none;
+    }
+    input[type="text"] {
+      padding: 0.5rem;
+      width: 70%;
+      max-width: 500px;
+      border: none;
+      border-radius: 5px;
+      margin-top: 2rem;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 5px;
+      background: #111;
+      color: #fff;
+      cursor: pointer;
+      margin-left: 0.5rem;
+    }
+    #spotifyResult {
+      max-width: 600px;
+      margin: 2rem auto;
+      text-align: center;
+      background: rgba(255,255,255,0.9);
+      padding: 1rem;
+      border-radius: 10px;
+    }
+    #spotifyResult img {
+      max-width: 200px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><i class="fas fa-music"></i> Music Downloader</h1>
+    <a href="index.html">← Back to Home</a>
+  </header>  <main>
+    <h2>Download Music from Spotify</h2>
+    <input type="text" id="spotifyUrl" placeholder="Enter Spotify Track URL" />
+    <button onclick="downloadSpotify()">Download</button>
+    <div id="spotifyResult"></div>
+  </main>  <script>
+    async function downloadSpotify() {
+      const url = document.getElementById("spotifyUrl").value;
+      const output = document.getElementById("spotifyResult");
+      output.innerHTML = "<p>Fetching download link...</p>";
+
+      try {
+        const res = await fetch(`https://api.giftedtech.co.ke/api/download/spotifydl?apikey=gifted&url=${encodeURIComponent(url)}`);
+        const data = await res.json();
+
+        if (data && data.title) {
+          output.innerHTML = `
+            <h3>${data.title}</h3>
+            <p>Artist: ${data.artist}</p>
+            <img src="${data.thumb}" alt="cover" />
+            <br><br><a href="${data.link}" target="_blank" download>🎵 Download MP3</a>
+          `;
+        } else {
+          output.innerHTML = "<p>Unable to retrieve music. Check the URL.</p>";
+        }
+      } catch (e) {
+        output.innerHTML = "<p>Error fetching music.</p>";
+      }
+    }
+  </script></body>
+                              </html>
