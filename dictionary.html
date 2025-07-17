@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dictionary | Cool Shot Designs/Tech</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header><h1>Dictionary</h1></header>
+  <main>
+    <input type="text" placeholder="Type a word..." id="wordInput" />
+    <button onclick="lookup()">Search</button>
+    <div id="definition"></div>
+  </main>
+  <script>
+    function lookup() {
+      const word = document.getElementById('wordInput').value;
+      document.getElementById('definition').innerText = 'Definition for: ' + word;
+    }
+  </script>
+</body>
+</html>

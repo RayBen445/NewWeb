@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Web Search</title>
+</head>
+<body>
+  <h1>Global Search</h1>
+  <input type="search" id="webSearch" placeholder="Search the web..." />
+  <button onclick="doSearch()">Go</button>
+
+  <script>
+    function doSearch() {
+      const q = document.getElementById("webSearch").value;
+      window.open("https://www.google.com/search?q=" + encodeURIComponent(q), "_blank");
+    }
+  </script>
+</body>
+</html>
