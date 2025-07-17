@@ -1,28 +1,156 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cool Shot Designs/Tech</title>
   <link rel="stylesheet" href="css/style.css" />
-  <script defer src="js/main.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --text: #111;
+      --bg: #fff;
+    }
+    [data-theme="dark"] {
+      --text: #eee;
+      --bg: #111;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(270deg, #ffecd2, #fcb69f, #ff9a9e, #fad0c4);
+      background-size: 800% 800%;
+      animation: gradientBG 20s ease infinite;
+      color: var(--text);
+      transition: background 0.5s, color 0.5s;
+    }
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+    header {
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .menu-button {
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100%;
+      background: #222;
+      color: white;
+      padding: 1rem;
+      transition: left 0.3s ease;
+      z-index: 999;
+    }
+    .sidebar a {
+      display: block;
+      margin: 1rem 0;
+      color: white;
+      text-decoration: none;
+    }
+    .sidebar.open {
+      left: 0;
+    }
+    main {
+      padding: 2rem;
+      text-align: center;
+    }
+    button.theme-toggle {
+      background: none;
+      border: 1px solid white;
+      color: white;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    #searchSection {
+      margin-top: 2rem;
+    }
+    #searchInput {
+      padding: 0.5rem;
+      width: 70%;
+      max-width: 400px;
+    }
+    #searchBtn {
+      padding: 0.5rem 1rem;
+      margin-left: 0.5rem;
+      cursor: pointer;
+    }
+    #results {
+      text-align: left;
+      max-width: 600px;
+      margin: 2rem auto;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 1rem;
+      border-radius: 10px;
+    }
+  </style>
 </head>
 <body>
   <header>
-    <div class="logo gradient-text">Cool Shot Designs/Tech</div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="contact.html">Contact</a>
-      <a href="dictionary.html">Dictionary</a>
-      <button onclick="toggleTheme()">🌓</button>
-    </nav>
-  </header>
-  <main class="hero">
-    <h1 class="gradient-text">Welcome to Cool Shot Designs/Tech</h1>
-    <p>Explore apps, games, Bible, music, and more — all in one place.</p>
-  </main>
-  <footer>
-    <p>© 2025 Cool Shot Designs/Tech. All rights reserved.</p>
-  </footer>
-</body>
-</html>
+    <div class="menu-button" onclick="toggleSidebar()">
+      <i class="fas fa-bars"></i>
+    </div>
+    <h1>Cool Shot Designs/Tech</h1>
+    <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+  </header>  <div id="sidebar" class="sidebar" onclick="event.stopPropagation()">
+    <a href="index.html">Home</a>
+    <a href="contact.html">Contact</a>
+    <a href="dictionary.html">Dictionary</a>
+    <a href="bible/index.html">Bible</a>
+    <a href="music.html">Music Player</a>
+    <a href="games.html">Games</a>
+    <a href="apps.html">App Downloads</a>
+  </div>  <main onclick="closeSidebar()">
+    <h2>Welcome to Cool Shot Designs/Tech</h2>
+    <p>Innovative. Creative. Connected.</p><div id="searchSection">
+  <input type="text" id="searchInput" placeholder="Search the web..." />
+  <button id="searchBtn" onclick="performSearch()">Search</button>
+</div>
+<div id="results"></div>
+
+  </main>  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('open');
+    }
+    function closeSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.remove('open');
+    }
+    function toggleTheme() {
+      const theme = document.documentElement.getAttribute("data-theme");
+      document.documentElement.setAttribute("data-theme", theme === "dark" ? "light" : "dark");
+    }
+    async function performSearch() {
+      const query = document.getElementById("searchInput").value;
+      const url = `https://api.giftedtech.co.ke/api/search/google?apikey=gifted&query=${encodeURIComponent(query)}`;
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        let output = "<h3>Search Results:</h3><ul>";
+        if (data.results && data.results.length > 0) {
+          data.results.forEach(item => {
+            output += `<li><a href="${item.link}" target="_blank">${item.title}</a><br>${item.description}</li>`;
+          });
+        } else {
+          output += "<li>No results found.</li>";
+        }
+        output += "</ul>";
+        document.getElementById("results").innerHTML = output;
+      } catch (error) {
+        document.getElementById("results").innerHTML = "<p>Error fetching results.</p>";
+      }
+    }
+  </script></body>
+  </html>
