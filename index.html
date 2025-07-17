@@ -111,10 +111,11 @@
     <a href="music.html">Music Player</a>
     <a href="games.html">Games</a>
     <a href="apps.html">App Downloads</a>
+    <a href="#searchSection">Search</a>
   </div>  <main onclick="closeSidebar()">
     <h2>Welcome to Cool Shot Designs/Tech</h2>
     <p>Innovative. Creative. Connected.</p><div id="searchSection">
-  <input type="text" id="searchInput" placeholder="Search the web..." />
+  <input type="text" id="searchInput" placeholder="Search the web or dictionary..." />
   <button id="searchBtn" onclick="performSearch()">Search</button>
 </div>
 <div id="results"></div>
@@ -134,23 +135,43 @@
     }
     async function performSearch() {
       const query = document.getElementById("searchInput").value;
-      const url = `https://api.giftedtech.co.ke/api/search/google?apikey=gifted&query=${encodeURIComponent(query)}`;
+      if (!query) return;
+
+      const googleUrl = `https://api.giftedtech.co.ke/api/search/google?apikey=gifted&query=${encodeURIComponent(query)}`;
+      const dictionaryUrl = `https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(query)}`;
+
+      let output = "";
       try {
-        const res = await fetch(url);
-        const data = await res.json();
-        let output = "<h3>Search Results:</h3><ul>";
-        if (data.results && data.results.length > 0) {
-          data.results.forEach(item => {
+        const [webRes, dictRes] = await Promise.all([
+          fetch(googleUrl).then(res => res.json()),
+          fetch(dictionaryUrl).then(res => res.json())
+        ]);
+
+        output += "<h3>Dictionary Definition:</h3>";
+        if (Array.isArray(dictRes)) {
+          dictRes.forEach(entry => {
+            entry.meanings.forEach(meaning => {
+              output += `<p><strong>${meaning.partOfSpeech}</strong>: ${meaning.definitions[0].definition}</p>`;
+            });
+          });
+        } else {
+          output += "<p>No dictionary result found.</p>";
+        }
+
+        output += "<h3>Web Search Results:</h3><ul>";
+        if (webRes.results && webRes.results.length > 0) {
+          webRes.results.forEach(item => {
             output += `<li><a href="${item.link}" target="_blank">${item.title}</a><br>${item.description}</li>`;
           });
         } else {
-          output += "<li>No results found.</li>";
+          output += "<li>No search results found.</li>";
         }
         output += "</ul>";
-        document.getElementById("results").innerHTML = output;
-      } catch (error) {
-        document.getElementById("results").innerHTML = "<p>Error fetching results.</p>";
+      } catch (err) {
+        output = "<p>Error retrieving data.</p>";
       }
+
+      document.getElementById("results").innerHTML = output;
     }
   </script></body>
-  </html>
+</html>
