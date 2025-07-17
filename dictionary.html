@@ -1,22 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dictionary | Cool Shot Designs/Tech</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      background: linear-gradient(270deg, #e3ffe7, #d9e7ff);
+      background-size: 600% 600%;
+      animation: gradient 30s ease infinite;
+    }
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    header {
+      background: #222;
+      color: #fff;
+      padding: 1rem;
+    }
+    input[type="text"] {
+      padding: 0.5rem;
+      width: 60%;
+      max-width: 400px;
+      border: none;
+      border-radius: 5px;
+      margin-top: 1rem;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      margin-left: 0.5rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background: #444;
+      color: #fff;
+    }
+    #definition {
+      margin-top: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 1rem;
+      border-radius: 10px;
+    }
+  </style>
 </head>
 <body>
-  <header><h1>Dictionary</h1></header>
-  <main>
-    <input type="text" placeholder="Type a word..." id="wordInput" />
-    <button onclick="lookup()">Search</button>
+  <header>
+    <h1><i class="fas fa-book"></i> Dictionary</h1>
+    <a href="index.html" style="color:#0f0; text-decoration:none;">← Back to Home</a>
+  </header>  <main>
+    <input type="text" id="wordInput" placeholder="Enter a word...">
+    <button onclick="lookupWord()">Search</button>
     <div id="definition"></div>
-  </main>
-  <script>
-    function lookup() {
-      const word = document.getElementById('wordInput').value;
-      document.getElementById('definition').innerText = 'Definition for: ' + word;
+  </main>  <script>
+    async function lookupWord() {
+      const word = document.getElementById("wordInput").value.trim();
+      if (!word) return;
+
+      const defBox = document.getElementById("definition");
+      defBox.innerHTML = "<p>Loading...</p>";
+
+      try {
+        const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
+        const data = await res.json();
+
+        if (Array.isArray(data)) {
+          let output = `<h2>${data[0].word}</h2>`;
+          data[0].meanings.forEach(meaning => {
+            output += `<p><strong>${meaning.partOfSpeech}:</strong> ${meaning.definitions[0].definition}</p>`;
+          });
+          defBox.innerHTML = output;
+        } else {
+          defBox.innerHTML = `<p>Word not found.</p>`;
+        }
+      } catch (err) {
+        defBox.innerHTML = `<p>Error fetching definition.</p>`;
+      }
     }
-  </script>
-</body>
+  </script></body>
 </html>
