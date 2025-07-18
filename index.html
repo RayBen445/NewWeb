@@ -4,25 +4,48 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cool Shot Designs/Tech</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <script defer src="js/main.js"></script>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 <body>
   <header>
-    <div class="logo gradient-text">Cool Shot Designs/Tech</div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="contact.html">Contact</a>
-      <a href="dictionary.html">Dictionary</a>
-      <button onclick="toggleTheme()">🌓</button>
-    </nav>
+    <h1>Cool Shot Designs/Tech</h1>
+    <button onclick="toggleSidebar()" class="menu-toggle"><i class="fas fa-bars"></i></button>
+    <button onclick="toggleTheme()" class="theme-toggle" title="Toggle Theme">🌓</button>
   </header>
-  <main class="hero">
-    <h1 class="gradient-text">Welcome to Cool Shot Designs/Tech</h1>
-    <p>Explore apps, games, Bible, music, and more — all in one place.</p>
+
+  <aside id="sidebar" class="sidebar">
+    <button onclick="toggleSidebar()" class="close-btn">&times;</button>
+    <ul>
+      <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="search.html"><i class="fas fa-search"></i> Search</a></li>
+      <li><a href="bible.html"><i class="fas fa-book"></i> Bible</a></li>
+      <li><a href="music.html"><i class="fas fa-music"></i> Music</a></li>
+      <li><a href="games.html"><i class="fas fa-gamepad"></i> Games</a></li>
+      <li><a href="dictionary.html"><i class="fas fa-language"></i> Dictionary</a></li>
+      <li><a href="chat.html"><i class="fas fa-robot"></i> Chat with AI</a></li>
+      <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+    </ul>
+  </aside>
+
+  <main class="main-content">
+    <h2>Welcome to Cool Shot Designs/Tech</h2>
+    <p>Your personal digital suite: Bible, Music, Games, Dictionary & More</p>
+    <a href="music.html" class="floating-btn"><i class="fas fa-play"></i> Music</a>
   </main>
-  <footer>
-    <p>© 2025 Cool Shot Designs/Tech. All rights reserved.</p>
-  </footer>
+
+  <audio id="bgMusic" autoplay loop>
+    <source src="https://api.giftedtech.co.ke/api/download/spotifydl?apikey=gifted&url=https%3A%2F%2Fopen.spotify.com%2Ftrack%2F4X5JYyfVvIhHKLgEa9Qhcc" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
+  <button onclick="toggleMusic()" id="musicToggle">🔊</button>
+
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const savedTheme = localStorage.getItem("theme") || "light";
+      document.documentElement.setAttribute("data-theme", savedTheme);
+    });
+  </script>
 </body>
 </html>
