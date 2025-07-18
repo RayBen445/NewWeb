@@ -1,51 +1,77 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cool Shot Designs/Tech</title>
-  <link rel="stylesheet" href="css/main.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <meta charset="UTF-8">
+    <title>Professor_Tech</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/main.js" defer></script>
 </head>
 <body>
-  <header>
-    <h1>Cool Shot Designs/Tech</h1>
-    <button onclick="toggleSidebar()" class="menu-toggle"><i class="fas fa-bars"></i></button>
-    <button onclick="toggleTheme()" class="theme-toggle" title="Toggle Theme">🌓</button>
-  </header>
+    <header>
+        <button id="menu-toggle">&#9776;</button>
+        <div class="datetime-location">
+            <span id="datetime"></span>
+            <span id="location"></span>
+        </div>
+    </header>
+    <nav id="sidebar" class="hidden">
+        <ul>
+            <li><a href="#bible">Bible</a></li>
+            <li><a href="#games">Games</a></li>
+            <li><a href="#music">Music</a></li>
+            <li><a href="#dictionary">Dictionary</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#apps">Download Apps</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section id="bible">
+            <h2>Bible Viewer</h2>
+            <select id="bible-version">
+                <option value="kjv">KJV</option>
+                <option value="niv">NIV</option>
+                <option value="esv">ESV</option>
+                <option value="nasb">NASB</option>
+                <option value="nkjv">NKJV</option>
+            </select>
+            <div id="bible-text">Select a version to load verses...</div>
+        </section>
+        <section id="games">
+            <h2>Tic Tac Toe</h2>
+            <div id="tic-tac-toe"></div>
+        </section>
+        <section id="music">
+            <h2>Music Search & Play</h2>
+            <input type="text" id="music-search" placeholder="Search for music...">
+            <button onclick="searchMusic()">Search</button>
+            <div id="music-result"></div>
+        </section>
+        <section id="dictionary">
+            <h2>Dictionary</h2>
+            <input type="text" id="dictionary-input" placeholder="Enter word...">
+            <button onclick="lookupWord()">Lookup</button>
+            <div id="dictionary-result"></div>
+        </section>
+        <section id="contact">
+            <h2>Contact Me</h2>
+            <p>Email: <a href="mailto:professor@example.com">professor@example.com</a></p>
+        </section>
+        <section id="apps">
+            <h2>Download Apps</h2>
+            <p><a href="#">App 1</a></p>
+            <p><a href="#">App 2</a></p>
+        </section>
+    
+<section id="bible">
+  <h2>Bible Viewer</h2>
+  <select id="book-select"></select>
+  <select id="chapter-select"></select>
+  <button onclick="loadVerses()">Load</button>
+  <div id="verse-display"></div>
+</section>
 
-  <aside id="sidebar" class="sidebar">
-    <button onclick="toggleSidebar()" class="close-btn">&times;</button>
-    <ul>
-      <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-      <li><a href="search.html"><i class="fas fa-search"></i> Search</a></li>
-      <li><a href="bible.html"><i class="fas fa-book"></i> Bible</a></li>
-      <li><a href="music.html"><i class="fas fa-music"></i> Music</a></li>
-      <li><a href="games.html"><i class="fas fa-gamepad"></i> Games</a></li>
-      <li><a href="dictionary.html"><i class="fas fa-language"></i> Dictionary</a></li>
-      <li><a href="chat.html"><i class="fas fa-robot"></i> Chat with AI</a></li>
-      <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
-    </ul>
-  </aside>
-
-  <main class="main-content">
-    <h2>Welcome to Cool Shot Designs/Tech</h2>
-    <p>Your personal digital suite: Bible, Music, Games, Dictionary & More</p>
-    <a href="music.html" class="floating-btn"><i class="fas fa-play"></i> Music</a>
-  </main>
-
-  <audio id="bgMusic" autoplay loop>
-    <source src="https://api.giftedtech.co.ke/api/download/spotifydl?apikey=gifted&url=https%3A%2F%2Fopen.spotify.com%2Ftrack%2F4X5JYyfVvIhHKLgEa9Qhcc" type="audio/mpeg" />
-    Your browser does not support the audio element.
-  </audio>
-  <button onclick="toggleMusic()" id="musicToggle">🔊</button>
-
-  <script src="js/main.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const savedTheme = localStorage.getItem("theme") || "light";
-      document.documentElement.setAttribute("data-theme", savedTheme);
-    });
-  </script>
+</main>
 </body>
 </html>
